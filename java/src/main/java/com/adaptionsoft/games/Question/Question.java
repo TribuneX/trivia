@@ -1,12 +1,12 @@
 package com.adaptionsoft.games.Question;
 
-public class Question {
+public class Question implements QuestionInterface{
 
     private String category;
     private String question;
 
-    public Question(String question, String category){
-        this.question = question;
+    public Question(String category, int content){
+        this.question = category + " Question " + content;
         this.category = category;
     }
 

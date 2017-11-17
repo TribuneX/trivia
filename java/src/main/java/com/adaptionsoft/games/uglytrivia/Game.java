@@ -1,26 +1,16 @@
 package com.adaptionsoft.games.uglytrivia;
 
 import com.adaptionsoft.games.Question.Question;
-import com.adaptionsoft.games.Question.QuestionList;
 import com.adaptionsoft.games.Question.QuestionStorage;
+import com.sun.org.apache.xml.internal.utils.StringToIntTable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
 
 public class Game {
 	ArrayList players = new ArrayList();
 	int[] places = new int[6];
 	int[] purses  = new int[6];
 	boolean[] inPenaltyBox  = new boolean[6];
-
-	LinkedList popQuestions = new LinkedList();
-
-	// TODO: Check why you should not include explicit types in the actual created object
-	LinkedList<Question> scienceQuestions = new LinkedList<Question>();
-	LinkedList sportsQuestions = new LinkedList();
-	LinkedList rockQuestions = new LinkedList();
 
 
 	QuestionStorage questions = new QuestionStorage();
@@ -31,19 +21,15 @@ public class Game {
 	public  Game(){
 		for (int i = 0; i < 50; i++) {
 
-			questions.addQuestion(new Question("Pop Question " + i, "Pop"));
-			questions.addQuestion(new Question("Science Question " + i, "Science"));
-			questions.addQuestion(new Question("Sports Question " + i, "Sports"));
-			questions.addQuestion(new Question("Rock Question " + i, "Rock"));
+			questions.addQuestion(new Question("Pop", i));
+			questions.addQuestion(new Question("Science", i));
+			questions.addQuestion(new Question("Sports", i));
+			questions.addQuestion(new Question("Rock", i));
 
 			//scienceQuestions.addLast(("Science Question " + i));
 			//sportsQuestions.addLast(("Sports Question " + i));
 			//rockQuestions.addLast(createRockQuestion(i));
 		}
-	}
-
-	public String createRockQuestion(int index){
-		return "Rock Question " + index;
 	}
 
 	public boolean isPlayable() {
@@ -104,18 +90,9 @@ public class Game {
 	}
 
 	private void askQuestion() {
-		if (currentCategory() == "Pop")
-			System.out.println(questions.getQuestionForCategoy("Pop").getQuestion());
-			//System.out.println(popQuestions.removeFirst());
-		if (currentCategory() == "Science")
-			System.out.println(questions.getQuestionForCategoy("Science").getQuestion());
-		    //System.out.println(scienceQuestions.removeFirst());
-		if (currentCategory() == "Sports")
-			System.out.println(questions.getQuestionForCategoy("Sports").getQuestion());
-			//System.out.println(sportsQuestions.removeFirst());
-		if (currentCategory() == "Rock")
-			System.out.println(questions.getQuestionForCategoy("Rock").getQuestion());
-			//System.out.println(rockQuestions.removeFirst());
+
+	    System.out.println(questions.getQuestionForCategoy(currentCategory()).getQuestion());
+
 	}
 
 
