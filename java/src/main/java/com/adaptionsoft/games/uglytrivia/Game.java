@@ -4,14 +4,16 @@ import com.adaptionsoft.games.Question.Question;
 import com.adaptionsoft.games.Question.QuestionStorage;
 import com.sun.org.apache.xml.internal.utils.StringToIntTable;
 
-import java.util.ArrayList;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class Game {
 	ArrayList players = new ArrayList();
 	int[] places = new int[6];
 	int[] purses  = new int[6];
 	boolean[] inPenaltyBox  = new boolean[6];
-
+    Set<String> categoriesSet = new LinkedHashSet<>();
+    String[] categories;
 
 	QuestionStorage questions = new QuestionStorage();
 
@@ -22,14 +24,19 @@ public class Game {
 		for (int i = 0; i < 50; i++) {
 
 			questions.addQuestion(new Question("Pop", i));
+			categoriesSet.add("Pop");
 			questions.addQuestion(new Question("Science", i));
+            categoriesSet.add("Science");
 			questions.addQuestion(new Question("Sports", i));
+            categoriesSet.add("Sports");
 			questions.addQuestion(new Question("Rock", i));
+            categoriesSet.add("Rock");
 
 			//scienceQuestions.addLast(("Science Question " + i));
 			//sportsQuestions.addLast(("Sports Question " + i));
 			//rockQuestions.addLast(createRockQuestion(i));
 		}
+        categories = categoriesSet.toArray(new String[categoriesSet.size()]);
 	}
 
 	public boolean isPlayable() {
@@ -97,16 +104,7 @@ public class Game {
 
 
 	private String currentCategory() {
-		if (places[currentPlayer] == 0) return "Pop";
-		if (places[currentPlayer] == 4) return "Pop";
-		if (places[currentPlayer] == 8) return "Pop";
-		if (places[currentPlayer] == 1) return "Science";
-		if (places[currentPlayer] == 5) return "Science";
-		if (places[currentPlayer] == 9) return "Science";
-		if (places[currentPlayer] == 2) return "Sports";
-		if (places[currentPlayer] == 6) return "Sports";
-		if (places[currentPlayer] == 10) return "Sports";
-		return "Rock";
+        return categories[places[currentPlayer]%categories.length];
 	}
 
 	public boolean wasCorrectlyAnswered() {
