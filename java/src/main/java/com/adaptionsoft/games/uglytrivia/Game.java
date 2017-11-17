@@ -1,10 +1,9 @@
 package com.adaptionsoft.games.uglytrivia;
 
+import com.adaptionsoft.games.PenaltyBox.PenaltyBox;
 import com.adaptionsoft.games.Question.Question;
 import com.adaptionsoft.games.Question.QuestionStorage;
-import com.sun.org.apache.xml.internal.utils.StringToIntTable;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Game {
@@ -12,6 +11,7 @@ public class Game {
 	int[] places = new int[6];
 	int[] purses  = new int[6];
 	boolean[] inPenaltyBox  = new boolean[6];
+	PenaltyBox penaltyBox = new PenaltyBox();
     Set<String> categoriesSet = new LinkedHashSet<>();
     String[] categories;
 
@@ -64,7 +64,9 @@ public class Game {
 		System.out.println(players.get(currentPlayer) + " is the current player");
 		System.out.println("They have rolled a " + roll);
 
-		if (inPenaltyBox[currentPlayer]) {
+		//if (inPenaltyBox[currentPlayer]) {
+		// TODO: Remove String cast
+		if (penaltyBox.isPlayerInTheBox((String)players.get(currentPlayer))) {
 			if (roll % 2 != 0) {
 				isGettingOutOfPenaltyBox = true;
 
@@ -108,7 +110,8 @@ public class Game {
 	}
 
 	public boolean wasCorrectlyAnswered() {
-		if (inPenaltyBox[currentPlayer]){
+		//if (inPenaltyBox[currentPlayer]){
+		if (penaltyBox.isPlayerInTheBox((String)players.get(currentPlayer))) {
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
 				purses[currentPlayer]++;
@@ -150,7 +153,8 @@ public class Game {
 	public boolean wrongAnswer(){
 		System.out.println("Question was incorrectly answered");
 		System.out.println(players.get(currentPlayer)+ " was sent to the penalty box");
-		inPenaltyBox[currentPlayer] = true;
+		penaltyBox.sendPlayerToTheBox((String)players.get(currentPlayer));
+		//inPenaltyBox[currentPlayer] = true;
 
 		currentPlayer++;
 		if (currentPlayer == players.size()) currentPlayer = 0;
