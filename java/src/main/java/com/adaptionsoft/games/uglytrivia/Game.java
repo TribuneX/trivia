@@ -30,13 +30,15 @@ public class Game {
 
 	public  Game(){
 		for (int i = 0; i < 50; i++) {
-			popQuestions.addLast("Pop Question " + i);
 
+			questions.addQuestion(new Question("Pop Question " + i, "Pop"));
 			questions.addQuestion(new Question("Science Question " + i, "Science"));
+			questions.addQuestion(new Question("Sports Question " + i, "Sports"));
+			questions.addQuestion(new Question("Rock Question " + i, "Rock"));
 
 			//scienceQuestions.addLast(("Science Question " + i));
-			sportsQuestions.addLast(("Sports Question " + i));
-			rockQuestions.addLast(createRockQuestion(i));
+			//sportsQuestions.addLast(("Sports Question " + i));
+			//rockQuestions.addLast(createRockQuestion(i));
 		}
 	}
 
@@ -103,14 +105,17 @@ public class Game {
 
 	private void askQuestion() {
 		if (currentCategory() == "Pop")
-			System.out.println(popQuestions.removeFirst());
+			System.out.println(questions.getQuestionForCategoy("Pop").getQuestion());
+			//System.out.println(popQuestions.removeFirst());
 		if (currentCategory() == "Science")
 			System.out.println(questions.getQuestionForCategoy("Science").getQuestion());
 		    //System.out.println(scienceQuestions.removeFirst());
 		if (currentCategory() == "Sports")
-			System.out.println(sportsQuestions.removeFirst());
+			System.out.println(questions.getQuestionForCategoy("Sports").getQuestion());
+			//System.out.println(sportsQuestions.removeFirst());
 		if (currentCategory() == "Rock")
-			System.out.println(rockQuestions.removeFirst());
+			System.out.println(questions.getQuestionForCategoy("Rock").getQuestion());
+			//System.out.println(rockQuestions.removeFirst());
 	}
 
 
