@@ -1,9 +1,13 @@
 package com.adaptionsoft.games.uglytrivia;
 
 import com.adaptionsoft.games.Question.Question;
+import com.adaptionsoft.games.Question.QuestionList;
+import com.adaptionsoft.games.Question.QuestionStorage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class Game {
 	ArrayList players = new ArrayList();
@@ -12,9 +16,14 @@ public class Game {
 	boolean[] inPenaltyBox  = new boolean[6];
 
 	LinkedList popQuestions = new LinkedList();
+
+	// TODO: Check why you should not include explicit types in the actual created object
 	LinkedList<Question> scienceQuestions = new LinkedList<Question>();
 	LinkedList sportsQuestions = new LinkedList();
 	LinkedList rockQuestions = new LinkedList();
+
+
+	QuestionStorage questions = new QuestionStorage();
 
 	int currentPlayer = 0;
 	boolean isGettingOutOfPenaltyBox;
@@ -22,7 +31,9 @@ public class Game {
 	public  Game(){
 		for (int i = 0; i < 50; i++) {
 			popQuestions.addLast("Pop Question " + i);
-			scienceQuestions.addLast(new Question("Science Question " + i, "Science"));
+
+			questions.addQuestion(new Question("Science Question " + i, "Science"));
+
 			//scienceQuestions.addLast(("Science Question " + i));
 			sportsQuestions.addLast(("Sports Question " + i));
 			rockQuestions.addLast(createRockQuestion(i));
@@ -94,7 +105,8 @@ public class Game {
 		if (currentCategory() == "Pop")
 			System.out.println(popQuestions.removeFirst());
 		if (currentCategory() == "Science")
-			System.out.println(scienceQuestions.removeFirst().getQuestion());
+			System.out.println(questions.getQuestionForCategoy("Science").getQuestion());
+		    //System.out.println(scienceQuestions.removeFirst());
 		if (currentCategory() == "Sports")
 			System.out.println(sportsQuestions.removeFirst());
 		if (currentCategory() == "Rock")
