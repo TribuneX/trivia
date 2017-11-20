@@ -14,11 +14,6 @@ public class ConsolePrinter implements Printer {
     @Override
     public void playerAdded(String playerName) {
         System.out.println(playerName + " was added");
-    }
-
-
-    @Override
-    public void howManyPlayers() {
         System.out.println("They are player number " + gameField.getNumPlayers());
     }
 
@@ -45,8 +40,8 @@ public class ConsolePrinter implements Printer {
     }
 
     @Override
-    public void currentCategory(QuestionStorage questions) {
-        System.out.println("The category is " + questions.getCategoryCurrentPosition(gameField.getPlaceForCurrentPlayer()));
+    public void currentCategory(String category) {
+        System.out.println("The category is " + category);
     }
 
     @Override

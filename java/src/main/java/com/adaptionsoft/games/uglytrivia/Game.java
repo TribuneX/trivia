@@ -37,12 +37,8 @@ public class Game {
 	}
 
 	public boolean add(String playerName) {
-
 		gameField.addPlayer(playerName);
-
 		printer.playerAdded(playerName);
-		printer.howManyPlayers();
-
 		return true;
 	}
 
@@ -62,7 +58,7 @@ public class Game {
 				printer.currentPosition();
 
 				// TODO: Get rid of the parameter
-				printer.currentCategory(questions);
+				printer.currentCategory(questions.getCategoryCurrentPosition(gameField.getPlaceForCurrentPlayer()));
 				askQuestion();
 			} else {
 				printer.notOutOfPenaltyBox();
@@ -74,7 +70,7 @@ public class Game {
 			gameField.movePlayer(roll);
 
 			printer.currentPosition();
-			printer.currentCategory(questions);
+			printer.currentCategory(questions.getCategoryCurrentPosition(gameField.getPlaceForCurrentPlayer()));
 			askQuestion();
 		}
 

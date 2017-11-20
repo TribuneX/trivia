@@ -5,8 +5,6 @@ import com.adaptionsoft.games.Question.QuestionStorage;
 public interface Printer {
     void playerAdded(String playerName);
 
-    void howManyPlayers();
-
     void currentPlayer();
 
     void roll(int roll);
@@ -15,7 +13,7 @@ public interface Printer {
 
     void currentPosition();
 
-    void currentCategory(QuestionStorage questions);
+    void currentCategory(String category);
 
     void notOutOfPenaltyBox();
 
