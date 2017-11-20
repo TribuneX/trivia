@@ -83,10 +83,10 @@ public class Game {
 		if (penaltyBox.isPlayerInTheBox(gameField.getCurrentPlayer())) {
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
-				purses[gameField.getCurrentPlayerByID()]++;
-				System.out.println(gameField.getCurrentPlayer()
+				gameField.putNewCoinsForPlayer();
+                System.out.println(gameField.getCurrentPlayer()
 						+ " now has "
-						+ purses[gameField.getCurrentPlayerByID()]
+						+ gameField.getCurrentCoins()
 						+ " Gold Coins.");
 
 				boolean winner = didPlayerWin();
@@ -103,10 +103,10 @@ public class Game {
 		} else {
 
 			System.out.println("Answer was correct!!!!");
-			purses[gameField.getCurrentPlayerByID()]++;
+            gameField.putNewCoinsForPlayer();
 			System.out.println(gameField.getCurrentPlayer()
 					+ " now has "
-					+ purses[gameField.getCurrentPlayerByID()]
+					+ gameField.getCurrentCoins()
 					+ " Gold Coins.");
 
 			boolean winner = didPlayerWin();
@@ -127,6 +127,6 @@ public class Game {
 
 
 	private boolean didPlayerWin() {
-		return !(purses[gameField.getCurrentPlayerByID()] == 6);
+		return !(gameField.getCurrentCoins() == 6);
 	}
 }

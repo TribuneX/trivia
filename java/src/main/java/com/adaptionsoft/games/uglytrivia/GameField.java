@@ -1,15 +1,17 @@
 package com.adaptionsoft.games.uglytrivia;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameField {
 
-    List<Player> players = new LinkedList<>();
+    List<Player> players = new ArrayList<>();
+    List<Integer> coins = new ArrayList<>();
     private int currentPlayer;
 
     public void addPlayer(String playerName) {
         players.add(new Player(playerName));
+        coins.add(new Integer(0));
     }
 
     public int getNumPlayers() {
@@ -42,5 +44,15 @@ public class GameField {
 
     public int getCurrentPlayerByID(){
         return currentPlayer;
+    }
+
+    public int getCurrentCoins() {
+        return coins.get(currentPlayer);
+    }
+
+    public void putNewCoinsForPlayer(){
+        Integer newCoins = coins.get(currentPlayer);
+        newCoins = newCoins + 1;
+        coins.set(currentPlayer, newCoins);
     }
 }
