@@ -10,7 +10,6 @@ public class Game {
 	ArrayList players = new ArrayList();
 	int[] places = new int[6];
 	int[] purses  = new int[6];
-	boolean[] inPenaltyBox  = new boolean[6];
 	PenaltyBox penaltyBox = new PenaltyBox();
 
 	QuestionStorage questions = new QuestionStorage();
@@ -38,7 +37,6 @@ public class Game {
 		players.add(playerName);
 		places[howManyPlayers()] = 0;
 		purses[howManyPlayers()] = 0;
-		inPenaltyBox[howManyPlayers()] = false;
 
 		System.out.println(playerName + " was added");
 		System.out.println("They are player number " + players.size());
@@ -141,7 +139,6 @@ public class Game {
 		System.out.println("Question was incorrectly answered");
 		System.out.println(players.get(currentPlayer)+ " was sent to the penalty box");
 		penaltyBox.sendPlayerToTheBox((String)players.get(currentPlayer));
-		inPenaltyBox[currentPlayer] = true;
 
 		currentPlayer++;
 		if (currentPlayer == players.size()) currentPlayer = 0;
