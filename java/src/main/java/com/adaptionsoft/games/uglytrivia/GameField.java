@@ -21,20 +21,15 @@ public class GameField {
         return players.get(currentPlayer).getPlayerName();
     }
 
-    public void setPlaceForCurrentPlayer(int place) {
-        players.get(currentPlayer).setPlace(place);
-    }
-
     public int getPlaceForCurrentPlayer() {
         return  players.get(currentPlayer).getPlace();
     }
 
-    public void movePlayerForward(int move){
+    public void movePlayer(int move){
         players.get(currentPlayer).movePlayerForward(move);
-    }
-
-    public void movePlayerBackward(int move){
-        players.get(currentPlayer).movePlayerBackward(move);
+        if (players.get(currentPlayer).getPlace() > 11) {
+            players.get(currentPlayer).movePlayerBackward(12);
+        }
     }
 
     public void nextPlayersTurn() {

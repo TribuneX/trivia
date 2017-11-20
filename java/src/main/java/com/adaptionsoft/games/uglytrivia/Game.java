@@ -11,7 +11,6 @@ public class Game {
 	QuestionStorage questions = new QuestionStorage();
     GameField gameField = new GameField();
 
-	int currentPlayer = 0;
 	boolean isGettingOutOfPenaltyBox;
 
 
@@ -45,8 +44,7 @@ public class Game {
 
 				System.out.println(gameField.getCurrentPlayer() + " is getting out of the penalty box");
 
-				gameField.movePlayerForward(roll);
-				if (gameField.getPlaceForCurrentPlayer() > 11) gameField.movePlayerBackward(12);
+				gameField.movePlayer(roll);
 
 				System.out.println(gameField.getCurrentPlayer()
 						+ "'s new location is "
@@ -60,10 +58,9 @@ public class Game {
 
 		} else {
 
-			gameField.movePlayerForward(roll);
+			gameField.movePlayer(roll);
 
 			// TODO: 12 seems to be a default action
-			if (gameField.getPlaceForCurrentPlayer() > 11) gameField.movePlayerBackward(12);
 			System.out.println(gameField.getCurrentPlayer()
 					+ "'s new location is "
 					+ gameField.getPlaceForCurrentPlayer());
