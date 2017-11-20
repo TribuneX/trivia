@@ -4,7 +4,7 @@ import com.adaptionsoft.games.PenaltyBox.PenaltyBox;
 import com.adaptionsoft.games.Printer.ConsolePrinter;
 import com.adaptionsoft.games.Printer.Printer;
 import com.adaptionsoft.games.Question.Question;
-import com.adaptionsoft.games.Question.QuestionStorage;
+import com.adaptionsoft.games.Question.QuestionMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 public class Game {
 	PenaltyBox penaltyBox = new PenaltyBox();
 
-	QuestionStorage questions = new QuestionStorage();
+	QuestionMap questions = new QuestionMap();
     GameField gameField = new GameField();
 
 	boolean isGettingOutOfPenaltyBox;
@@ -80,7 +80,7 @@ public class Game {
 	}
 
 	private void askQuestion() {
-		printer.printQuestion(questions.getQuestionForCategoy(currentCategory()));
+		printer.printQuestion(questions.getQuestionForCategory(currentCategory()));
 	}
 
 
