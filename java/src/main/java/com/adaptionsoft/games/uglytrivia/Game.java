@@ -4,8 +4,6 @@ import com.adaptionsoft.games.PenaltyBox.PenaltyBox;
 import com.adaptionsoft.games.Question.Question;
 import com.adaptionsoft.games.Question.QuestionStorage;
 
-import java.util.*;
-
 public class Game {
 	int[] purses  = new int[6];
 	PenaltyBox penaltyBox = new PenaltyBox();
@@ -38,37 +36,37 @@ public class Game {
 	}
 
 	public void roll(int roll) {
-		System.out.println(gameField.getCurrentPlayer(currentPlayer) + " is the current player");
+		System.out.println(gameField.getCurrentPlayer() + " is the current player");
 		System.out.println("They have rolled a " + roll);
 
-		if (penaltyBox.isPlayerInTheBox(gameField.getCurrentPlayer(currentPlayer))) {
+		if (penaltyBox.isPlayerInTheBox(gameField.getCurrentPlayer())) {
 			if (roll % 2 != 0) {
 				isGettingOutOfPenaltyBox = true;
 
-				System.out.println(gameField.getCurrentPlayer(currentPlayer) + " is getting out of the penalty box");
+				System.out.println(gameField.getCurrentPlayer() + " is getting out of the penalty box");
 
-				gameField.movePlayerForward(currentPlayer,roll);
-				if (gameField.getPlaceForCurrentPlayer(currentPlayer) > 11) gameField.movePlayerBackward(currentPlayer,12);
+				gameField.movePlayerForward(roll);
+				if (gameField.getPlaceForCurrentPlayer() > 11) gameField.movePlayerBackward(12);
 
-				System.out.println(gameField.getCurrentPlayer(currentPlayer)
+				System.out.println(gameField.getCurrentPlayer()
 						+ "'s new location is "
-						+ gameField.getPlaceForCurrentPlayer(currentPlayer));
+						+ gameField.getPlaceForCurrentPlayer());
 				System.out.println("The category is " + currentCategory());
 				askQuestion();
 			} else {
-				System.out.println(gameField.getCurrentPlayer(currentPlayer) + " is not getting out of the penalty box");
+				System.out.println(gameField.getCurrentPlayer() + " is not getting out of the penalty box");
 				isGettingOutOfPenaltyBox = false;
 			}
 
 		} else {
 
-			gameField.movePlayerForward(currentPlayer, roll);
+			gameField.movePlayerForward(roll);
 
 			// TODO: 12 seems to be a default action
-			if (gameField.getPlaceForCurrentPlayer(currentPlayer) > 11) gameField.movePlayerBackward(currentPlayer,12);
-			System.out.println(gameField.getCurrentPlayer(currentPlayer)
+			if (gameField.getPlaceForCurrentPlayer() > 11) gameField.movePlayerBackward(12);
+			System.out.println(gameField.getCurrentPlayer()
 					+ "'s new location is "
-					+ gameField.getPlaceForCurrentPlayer(currentPlayer));
+					+ gameField.getPlaceForCurrentPlayer());
 			System.out.println("The category is " + currentCategory());
 			askQuestion();
 		}
@@ -81,27 +79,25 @@ public class Game {
 
 
 	private String currentCategory() {
-		return questions.getCategoryCurrentPosition(gameField.getPlaceForCurrentPlayer(currentPlayer));
+		return questions.getCategoryCurrentPosition(gameField.getPlaceForCurrentPlayer());
 	}
 
 	public boolean wasCorrectlyAnswered() {
-		if (penaltyBox.isPlayerInTheBox(gameField.getCurrentPlayer(currentPlayer))) {
+		if (penaltyBox.isPlayerInTheBox(gameField.getCurrentPlayer())) {
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
-				purses[currentPlayer]++;
-				System.out.println(gameField.getCurrentPlayer(currentPlayer)
+				purses[gameField.getCurrentPlayerByID()]++;
+				System.out.println(gameField.getCurrentPlayer()
 						+ " now has "
-						+ purses[currentPlayer]
+						+ purses[gameField.getCurrentPlayerByID()]
 						+ " Gold Coins.");
 
 				boolean winner = didPlayerWin();
-				currentPlayer++;
-				if (currentPlayer == gameField.getNumPlayers()) currentPlayer = 0;
+				gameField.nextPlayersTurn();
 
 				return winner;
 			} else {
-				currentPlayer++;
-				if (currentPlayer == gameField.getNumPlayers()) currentPlayer = 0;
+				gameField.nextPlayersTurn();
 				return true;
 			}
 
@@ -110,15 +106,14 @@ public class Game {
 		} else {
 
 			System.out.println("Answer was correct!!!!");
-			purses[currentPlayer]++;
-			System.out.println(gameField.getCurrentPlayer(currentPlayer)
+			purses[gameField.getCurrentPlayerByID()]++;
+			System.out.println(gameField.getCurrentPlayer()
 					+ " now has "
-					+ purses[currentPlayer]
+					+ purses[gameField.getCurrentPlayerByID()]
 					+ " Gold Coins.");
 
 			boolean winner = didPlayerWin();
-			currentPlayer++;
-			if (currentPlayer == gameField.getNumPlayers()) currentPlayer = 0;
+			gameField.nextPlayersTurn();
 
 			return winner;
 		}
@@ -126,16 +121,15 @@ public class Game {
 
 	public boolean wrongAnswer(){
 		System.out.println("Question was incorrectly answered");
-		System.out.println(gameField.getCurrentPlayer(currentPlayer)+ " was sent to the penalty box");
-		penaltyBox.sendPlayerToTheBox(gameField.getCurrentPlayer(currentPlayer));
+		System.out.println(gameField.getCurrentPlayer()+ " was sent to the penalty box");
+		penaltyBox.sendPlayerToTheBox(gameField.getCurrentPlayer());
 
-		currentPlayer++;
-		if (currentPlayer == gameField.getNumPlayers()) currentPlayer = 0;
+		gameField.nextPlayersTurn();
 		return true;
 	}
 
 
 	private boolean didPlayerWin() {
-		return !(purses[currentPlayer] == 6);
+		return !(purses[gameField.getCurrentPlayerByID()] == 6);
 	}
 }
