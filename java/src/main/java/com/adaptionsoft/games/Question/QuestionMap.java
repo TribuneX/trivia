@@ -2,7 +2,7 @@ package com.adaptionsoft.games.Question;
 
 import java.util.*;
 
-public class QuestionMap implements QuestionStorage {
+public class QuestionMap {
 
     Map<String, LinkedList<Question>> questionStorage;
     Set<String> categoriesSet;
@@ -12,7 +12,6 @@ public class QuestionMap implements QuestionStorage {
         this.categoriesSet = new LinkedHashSet<>();
     }
 
-    @Override
     public void addQuestion(Question q) {
 
         // If category is not yet stored, create a new list
@@ -24,8 +23,7 @@ public class QuestionMap implements QuestionStorage {
         categoriesSet.add(q.getCategory());
 
     }
-
-    @Override
+    
     public Question getQuestionForCategory(String category) {
         if (questionStorage.get(category).isEmpty()){
             return null;

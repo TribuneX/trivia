@@ -1,7 +1,21 @@
 package com.adaptionsoft.games.Question;
 
-public interface Question {
+public class Question {
 
-    String getCategory();
-    String toString();
+    private String category;
+    private String question;
+
+    public Question(String category, int content){
+        this.question = category + " Question " + content;
+        this.category = category;
+    }
+
+    public String toString(){
+        return this.question;
+    }
+
+    public String getCategory(){
+        return this.category;
+    }
+
 }

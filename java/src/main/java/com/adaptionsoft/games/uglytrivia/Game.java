@@ -2,8 +2,7 @@ package com.adaptionsoft.games.uglytrivia;
 
 import com.adaptionsoft.games.PenaltyBox.PenaltyBox;
 import com.adaptionsoft.games.Printer.ConsolePrinter;
-import com.adaptionsoft.games.Printer.Printer;
-import com.adaptionsoft.games.Question.SimpleQuestion;
+import com.adaptionsoft.games.Question.Question;
 import com.adaptionsoft.games.Question.QuestionMap;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ public class Game {
 
 	boolean isGettingOutOfPenaltyBox;
 
-	Printer printer = new ConsolePrinter(gameField);
+	ConsolePrinter printer = new ConsolePrinter(gameField);
 
 	public Game(){
 		List<String> categories = new ArrayList<>();
@@ -31,7 +30,7 @@ public class Game {
 	private void createQuestions(List<String> categories) {
 		for (int i = 0; i < 50; i++) {
 			for (String category: categories){
-				questions.addQuestion(new SimpleQuestion(category,i));
+				questions.addQuestion(new Question(category,i));
 			}
 		}
 	}
@@ -80,6 +79,7 @@ public class Game {
 	}
 
 	private void askQuestion() {
+		// TODO: Find a more elegant solution for the current category
 		printer.printQuestion(questions.getQuestionForCategory(currentCategory()));
 	}
 
