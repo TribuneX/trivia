@@ -12,8 +12,6 @@ public class Game {
 	int[] purses  = new int[6];
 	boolean[] inPenaltyBox  = new boolean[6];
 	PenaltyBox penaltyBox = new PenaltyBox();
-    Set<String> categoriesSet = new LinkedHashSet<>();
-    String[] categories;
 
 	QuestionStorage questions = new QuestionStorage();
 
@@ -28,7 +26,6 @@ public class Game {
 			questions.addQuestion(new Question("Sports", i));
 			questions.addQuestion(new Question("Rock", i));
 		}
-        categories = categoriesSet.toArray(new String[categoriesSet.size()]);
 	}
 
 	public boolean isPlayable() {
