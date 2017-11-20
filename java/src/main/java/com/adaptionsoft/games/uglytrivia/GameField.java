@@ -20,7 +20,6 @@ public class GameField {
         return players.size();
     }
 
-
     public String getCurrentPlayer() {
         return players.get(currentPlayer).getPlayerName();
     }
@@ -42,10 +41,6 @@ public class GameField {
         } else {
             currentPlayer = 0;
         }
-    }
-
-    public int getCurrentPlayerByID(){
-        return currentPlayer;
     }
 
     public int getCurrentCoins() {
