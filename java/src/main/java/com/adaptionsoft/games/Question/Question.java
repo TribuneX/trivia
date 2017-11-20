@@ -10,7 +10,8 @@ public class Question implements QuestionInterface{
         this.category = category;
     }
 
-    public String getQuestion(){
+    @Override
+    public String toString(){
         return this.question;
     }
 

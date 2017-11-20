@@ -1,23 +1,26 @@
 package com.adaptionsoft.games.Printer;
 
-import com.adaptionsoft.games.Question.QuestionStorage;
+import com.adaptionsoft.games.Question.QuestionInterface;
 
 public interface Printer {
-    void playerAdded(String playerName);
+    void printPlayerAdded(String playerName);
 
-    void currentPlayer();
+    void printCurrentPlayer();
 
-    void roll(int roll);
+    void printRoll(int roll);
 
-    void outOfPenaltyBox();
+    void printOutOfPenaltyBox();
 
-    void currentPosition();
+    void printCurrentPosition();
 
-    void currentCategory(String category);
+    void printCurrentCategory(String category);
 
-    void notOutOfPenaltyBox();
+    void printNotOutOfPenaltyBox();
 
-    void correctAnswer();
+    void printCorrectAnswer();
 
-    void sentToPenaltyBox();
+    void printSentToPenaltyBox();
+
+    void printQuestion(QuestionInterface question);
+
 }

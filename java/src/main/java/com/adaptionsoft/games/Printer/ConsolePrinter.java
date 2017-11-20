@@ -1,6 +1,6 @@
 package com.adaptionsoft.games.Printer;
 
-import com.adaptionsoft.games.Question.QuestionStorage;
+import com.adaptionsoft.games.Question.QuestionInterface;
 import com.adaptionsoft.games.uglytrivia.GameField;
 
 public class ConsolePrinter implements Printer {
@@ -12,45 +12,45 @@ public class ConsolePrinter implements Printer {
     }
 
     @Override
-    public void playerAdded(String playerName) {
+    public void printPlayerAdded(String playerName) {
         System.out.println(playerName + " was added");
         System.out.println("They are player number " + gameField.getNumPlayers());
     }
 
     @Override
-    public void currentPlayer() {
+    public void printCurrentPlayer() {
         System.out.println(gameField.getCurrentPlayer() + " is the current player");
     }
 
     @Override
-    public void roll(int roll) {
+    public void printRoll(int roll) {
         System.out.println("They have rolled a " + roll);
     }
 
     @Override
-    public void outOfPenaltyBox() {
+    public void printOutOfPenaltyBox() {
         System.out.println(gameField.getCurrentPlayer() + " is getting out of the penalty box");
     }
 
     @Override
-    public void currentPosition() {
+    public void printCurrentPosition() {
         System.out.println(gameField.getCurrentPlayer()
                 + "'s new location is "
                 + gameField.getPlaceForCurrentPlayer());
     }
 
     @Override
-    public void currentCategory(String category) {
+    public void printCurrentCategory(String category) {
         System.out.println("The category is " + category);
     }
 
     @Override
-    public void notOutOfPenaltyBox() {
+    public void printNotOutOfPenaltyBox() {
         System.out.println(gameField.getCurrentPlayer() + " is not getting out of the penalty box");
     }
 
     @Override
-    public void correctAnswer() {
+    public void printCorrectAnswer() {
         System.out.println("Answer was correct!!!!");
         currentCoins();
     }
@@ -63,8 +63,13 @@ public class ConsolePrinter implements Printer {
     }
 
     @Override
-    public void sentToPenaltyBox() {
+    public void printSentToPenaltyBox() {
         System.out.println("Question was incorrectly answered");
         System.out.println(gameField.getCurrentPlayer()+ " was sent to the penalty box");
+    }
+
+    @Override
+    public void printQuestion(QuestionInterface question) {
+        System.out.println(question.toString());
     }
 }

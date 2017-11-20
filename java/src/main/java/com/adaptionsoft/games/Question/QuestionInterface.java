@@ -3,5 +3,5 @@ package com.adaptionsoft.games.Question;
 public interface QuestionInterface {
 
     String getCategory();
-    String getQuestion();
+    String toString();
 }
