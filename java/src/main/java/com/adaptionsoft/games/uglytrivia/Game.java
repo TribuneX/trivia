@@ -7,7 +7,6 @@ import com.adaptionsoft.games.Question.QuestionStorage;
 import java.util.*;
 
 public class Game {
-	int[] places = new int[6];
 	int[] purses  = new int[6];
 	PenaltyBox penaltyBox = new PenaltyBox();
 
@@ -31,7 +30,6 @@ public class Game {
 
 		gameField.addPlayer(playerName);
 
-		places[gameField.getNumPlayers()] = 0;
 		purses[gameField.getNumPlayers()] = 0;
 
 		System.out.println(playerName + " was added");
