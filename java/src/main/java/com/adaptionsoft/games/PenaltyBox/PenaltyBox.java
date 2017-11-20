@@ -5,8 +5,7 @@ import java.util.Set;
 
 public class PenaltyBox {
 
-
-    Set<String> box;
+    private Set<String> box;
 
     public PenaltyBox(){
         box = new HashSet<>();
