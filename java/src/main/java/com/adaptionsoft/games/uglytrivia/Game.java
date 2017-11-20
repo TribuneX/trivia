@@ -38,30 +38,33 @@ public class Game {
 
 	public boolean add(String playerName) {
 		gameField.addPlayer(playerName);
-		printer.playerAdded(playerName);
+		printer.printPlayerAdded(playerName);
 		return true;
 	}
 
 	public void roll(int roll) {
 
-		printer.currentPlayer();
-		printer.roll(roll);
+		printer.printCurrentPlayer();
+		printer.printRoll(roll);
 
 		if (penaltyBox.isPlayerInTheBox(gameField.getCurrentPlayer())) {
-			if (roll % 2 != 0) {
+			// Player got an odd number
+		    if (roll % 2 != 0) {
 				isGettingOutOfPenaltyBox = true;
 
-				printer.outOfPenaltyBox();
+				printer.printOutOfPenaltyBox();
 
 				gameField.movePlayer(roll);
 
-				printer.currentPosition();
+				printer.printCurrentPosition();
 
 				// TODO: Get rid of the parameter
-				printer.currentCategory(questions.getCategoryCurrentPosition(gameField.getPlaceForCurrentPlayer()));
+				printer.printCurrentCategory(currentCategory());
 				askQuestion();
+
+			// Player got an even number
 			} else {
-				printer.notOutOfPenaltyBox();
+				printer.printNotOutOfPenaltyBox();
 				isGettingOutOfPenaltyBox = false;
 			}
 
@@ -69,15 +72,15 @@ public class Game {
 
 			gameField.movePlayer(roll);
 
-			printer.currentPosition();
-			printer.currentCategory(questions.getCategoryCurrentPosition(gameField.getPlaceForCurrentPlayer()));
+			printer.printCurrentPosition();
+			printer.printCurrentCategory(currentCategory());
 			askQuestion();
 		}
 
 	}
 
 	private void askQuestion() {
-	    System.out.println(questions.getQuestionForCategoy(currentCategory()).getQuestion());
+		printer.printQuestion(questions.getQuestionForCategoy(currentCategory()));
 	}
 
 
@@ -86,34 +89,28 @@ public class Game {
 	}
 
 	public boolean wasCorrectlyAnswered() {
-		if (penaltyBox.isPlayerInTheBox(gameField.getCurrentPlayer())) {
-			if (isGettingOutOfPenaltyBox) {
-				gameField.putNewCoinsForPlayer();
-				printer.correctAnswer();
+		boolean currentPlayerInPenaltyBox = penaltyBox.isPlayerInTheBox(gameField.getCurrentPlayer());
 
-
-				boolean winner = gameField.didPlayerWin();
-				gameField.nextPlayersTurn();
-
-				return winner;
-			} else {
-				gameField.nextPlayersTurn();
-				return true;
-			}
-
+		if (isGettingOutOfPenaltyBox || !currentPlayerInPenaltyBox) {
+			return performPlayersMove();
 		} else {
-			gameField.putNewCoinsForPlayer();
-            printer.correctAnswer();
-
-			boolean winner = gameField.didPlayerWin();
 			gameField.nextPlayersTurn();
-
-			return winner;
+			return true;
 		}
 	}
 
-	public boolean wrongAnswer(){
-		printer.sentToPenaltyBox();
+    private boolean performPlayersMove() {
+        gameField.putNewCoinsForPlayer();
+        printer.printCorrectAnswer();
+
+        boolean winner = gameField.didPlayerWin();
+        gameField.nextPlayersTurn();
+
+        return winner;
+    }
+
+    public boolean wrongAnswer(){
+		printer.printSentToPenaltyBox();
 		penaltyBox.sendPlayerToTheBox(gameField.getCurrentPlayer());
 
 		gameField.nextPlayersTurn();
