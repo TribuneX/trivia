@@ -14,4 +14,9 @@ public class GameField {
     public int getNumPlayers() {
         return players.size();
     }
+
+
+    public String getCurrentPlayer(int currentPlayer) {
+        return players.get(currentPlayer).getPlayerName();
+    }
 }
