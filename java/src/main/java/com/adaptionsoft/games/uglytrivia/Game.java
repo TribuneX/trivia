@@ -13,13 +13,14 @@ public class Game {
 	PenaltyBox penaltyBox = new PenaltyBox();
 
 	QuestionStorage questions = new QuestionStorage();
+    GameField gameField = new GameField();
 
 	int currentPlayer = 0;
 	boolean isGettingOutOfPenaltyBox;
 
+
 	public  Game(){
 		for (int i = 0; i < 50; i++) {
-
 			questions.addQuestion(new Question("Pop", i));
 			questions.addQuestion(new Question("Science", i));
 			questions.addQuestion(new Question("Sports", i));
@@ -28,23 +29,20 @@ public class Game {
 	}
 
 	public boolean isPlayable() {
-		return (howManyPlayers() >= 2);
+		return (gameField.getNumPlayers() >= 2);
 	}
 
 	public boolean add(String playerName) {
 
-
 		players.add(playerName);
-		places[howManyPlayers()] = 0;
-		purses[howManyPlayers()] = 0;
+		gameField.addPlayer(playerName);
+
+		places[gameField.getNumPlayers()] = 0;
+		purses[gameField.getNumPlayers()] = 0;
 
 		System.out.println(playerName + " was added");
 		System.out.println("They are player number " + players.size());
 		return true;
-	}
-
-	public int howManyPlayers() {
-		return players.size();
 	}
 
 	public void roll(int roll) {
