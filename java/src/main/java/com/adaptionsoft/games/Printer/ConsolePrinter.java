@@ -1,6 +1,6 @@
 package com.adaptionsoft.games.Printer;
 
-import com.adaptionsoft.games.Question.QuestionInterface;
+import com.adaptionsoft.games.Question.Question;
 import com.adaptionsoft.games.uglytrivia.GameField;
 
 public class ConsolePrinter implements Printer {
@@ -69,7 +69,7 @@ public class ConsolePrinter implements Printer {
     }
 
     @Override
-    public void printQuestion(QuestionInterface question) {
+    public void printQuestion(Question question) {
         System.out.println(question.toString());
     }
 }

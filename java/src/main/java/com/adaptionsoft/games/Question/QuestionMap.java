@@ -4,7 +4,7 @@ import java.util.*;
 
 public class QuestionMap implements QuestionStorage {
 
-    Map<String, LinkedList<QuestionInterface>> questionStorage;
+    Map<String, LinkedList<Question>> questionStorage;
     Set<String> categoriesSet;
 
     public QuestionMap() {
@@ -13,7 +13,7 @@ public class QuestionMap implements QuestionStorage {
     }
 
     @Override
-    public void addQuestion(QuestionInterface q) {
+    public void addQuestion(Question q) {
 
         // If category is not yet stored, create a new list
         if (questionStorage.get(q.getCategory()) == null){
@@ -26,7 +26,7 @@ public class QuestionMap implements QuestionStorage {
     }
 
     @Override
-    public QuestionInterface getQuestionForCategory(String category) {
+    public Question getQuestionForCategory(String category) {
         if (questionStorage.get(category).isEmpty()){
             return null;
         } else {

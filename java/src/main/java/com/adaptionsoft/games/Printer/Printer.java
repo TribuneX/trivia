@@ -1,6 +1,6 @@
 package com.adaptionsoft.games.Printer;
 
-import com.adaptionsoft.games.Question.QuestionInterface;
+import com.adaptionsoft.games.Question.Question;
 
 public interface Printer {
     void printPlayerAdded(String playerName);
@@ -21,6 +21,6 @@ public interface Printer {
 
     void printSentToPenaltyBox();
 
-    void printQuestion(QuestionInterface question);
+    void printQuestion(Question question);
 
 }

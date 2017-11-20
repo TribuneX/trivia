@@ -2,8 +2,8 @@ package com.adaptionsoft.games.Question;
 
 public interface QuestionStorage {
 
-    void addQuestion(QuestionInterface q);
+    void addQuestion(Question q);
 
-    QuestionInterface getQuestionForCategory(String c);
+    Question getQuestionForCategory(String c);
 
 }
