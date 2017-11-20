@@ -6,6 +6,9 @@ import com.adaptionsoft.games.Printer.Printer;
 import com.adaptionsoft.games.Question.Question;
 import com.adaptionsoft.games.Question.QuestionStorage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
 	PenaltyBox penaltyBox = new PenaltyBox();
 
@@ -16,12 +19,20 @@ public class Game {
 
 	Printer printer = new ConsolePrinter(gameField);
 
-	public  Game(){
+	public Game(){
+		List<String> categories = new ArrayList<>();
+		categories.add("Pop");
+		categories.add("Science");
+		categories.add("Sports");
+		categories.add("Rock");
+		createQuestions(categories);
+	}
+
+	private void createQuestions(List<String> categories) {
 		for (int i = 0; i < 50; i++) {
-			questions.addQuestion(new Question("Pop", i));
-			questions.addQuestion(new Question("Science", i));
-			questions.addQuestion(new Question("Sports", i));
-			questions.addQuestion(new Question("Rock", i));
+			for (String category: categories){
+				questions.addQuestion(new Question(category,i));
+			}
 		}
 	}
 
