@@ -10,12 +10,10 @@ import java.util.List;
 
 public class Game {
 	PenaltyBox penaltyBox = new PenaltyBox();
-
 	QuestionMap questions = new QuestionMap();
     GameField gameField = new GameField();
 
 	boolean isGettingOutOfPenaltyBox;
-
 	ConsolePrinter printer = new ConsolePrinter(gameField);
 
 	public Game(){
@@ -43,23 +41,15 @@ public class Game {
 
 	public void roll(int roll) {
 
-		printer.printCurrentPlayer();
-		printer.printRoll(roll);
+		printer.printCurrentPlayer(roll);
 
 		if (penaltyBox.isPlayerInTheBox(gameField.getCurrentPlayer())) {
 			// Player got an odd number
 		    if (roll % 2 != 0) {
 				isGettingOutOfPenaltyBox = true;
-
 				printer.printOutOfPenaltyBox();
 
-				gameField.movePlayer(roll);
-
-				printer.printCurrentPosition();
-
-				// TODO: Get rid of the parameter
-				printer.printCurrentCategory(currentCategory());
-				askQuestion();
+				MoveAndAskQuestion(roll);
 
 			// Player got an even number
 			} else {
@@ -68,14 +58,17 @@ public class Game {
 			}
 
 		} else {
-
-			gameField.movePlayer(roll);
-
-			printer.printCurrentPosition();
-			printer.printCurrentCategory(currentCategory());
-			askQuestion();
+			MoveAndAskQuestion(roll);
 		}
 
+
+	}
+
+	private void MoveAndAskQuestion(int roll) {
+		gameField.movePlayer(roll);
+		// TODO: Get rid of the parameter
+		printer.printCurrentStats(currentCategory());
+		askQuestion();
 	}
 
 	private void askQuestion() {

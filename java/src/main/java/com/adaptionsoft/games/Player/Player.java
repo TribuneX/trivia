@@ -14,10 +14,6 @@ public class Player {
         return playerName;
     }
 
-    public void setPlace(int place) {
-        this.place = place;
-    }
-
     public int getPlace() {
         return place;
     }
