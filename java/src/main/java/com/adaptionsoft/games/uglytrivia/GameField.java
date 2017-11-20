@@ -19,4 +19,20 @@ public class GameField {
     public String getCurrentPlayer(int currentPlayer) {
         return players.get(currentPlayer).getPlayerName();
     }
+
+    public void setPlaceForCurrentPlayer(int currentPlayer, int place) {
+        players.get(currentPlayer).setPlace(place);
+    }
+
+    public int getPlaceForCurrentPlayer(int currentPlayer) {
+        return  players.get(currentPlayer).getPlace();
+    }
+
+    public void movePlayerForward(int currentPlayer, int move){
+        players.get(currentPlayer).movePlayerForward(move);
+    }
+
+    public void movePlayerBackward(int currentPlayer, int move){
+        players.get(currentPlayer).movePlayerBackward(move);
+    }
 }

@@ -7,7 +7,6 @@ import com.adaptionsoft.games.Question.QuestionStorage;
 import java.util.*;
 
 public class Game {
-	ArrayList players = new ArrayList();
 	int[] places = new int[6];
 	int[] purses  = new int[6];
 	PenaltyBox penaltyBox = new PenaltyBox();
@@ -30,14 +29,13 @@ public class Game {
 
 	public boolean add(String playerName) {
 
-		players.add(playerName);
 		gameField.addPlayer(playerName);
 
 		places[gameField.getNumPlayers()] = 0;
 		purses[gameField.getNumPlayers()] = 0;
 
 		System.out.println(playerName + " was added");
-		System.out.println("They are player number " + players.size());
+		System.out.println("They are player number " + gameField.getNumPlayers());
 		return true;
 	}
 
@@ -50,12 +48,13 @@ public class Game {
 				isGettingOutOfPenaltyBox = true;
 
 				System.out.println(gameField.getCurrentPlayer(currentPlayer) + " is getting out of the penalty box");
-				places[currentPlayer] = places[currentPlayer] + roll;
-				if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
+
+				gameField.movePlayerForward(currentPlayer,roll);
+				if (gameField.getPlaceForCurrentPlayer(currentPlayer) > 11) gameField.movePlayerBackward(currentPlayer,12);
 
 				System.out.println(gameField.getCurrentPlayer(currentPlayer)
 						+ "'s new location is "
-						+ places[currentPlayer]);
+						+ gameField.getPlaceForCurrentPlayer(currentPlayer));
 				System.out.println("The category is " + currentCategory());
 				askQuestion();
 			} else {
@@ -65,12 +64,13 @@ public class Game {
 
 		} else {
 
-			places[currentPlayer] = places[currentPlayer] + roll;
-			if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
+			gameField.movePlayerForward(currentPlayer, roll);
 
+			// TODO: 12 seems to be a default action
+			if (gameField.getPlaceForCurrentPlayer(currentPlayer) > 11) gameField.movePlayerBackward(currentPlayer,12);
 			System.out.println(gameField.getCurrentPlayer(currentPlayer)
 					+ "'s new location is "
-					+ places[currentPlayer]);
+					+ gameField.getPlaceForCurrentPlayer(currentPlayer));
 			System.out.println("The category is " + currentCategory());
 			askQuestion();
 		}
@@ -83,12 +83,11 @@ public class Game {
 
 
 	private String currentCategory() {
-        return questions.getCategoryCurrentPosition(places[currentPlayer]);
+		return questions.getCategoryCurrentPosition(gameField.getPlaceForCurrentPlayer(currentPlayer));
 	}
 
 	public boolean wasCorrectlyAnswered() {
-		//if (inPenaltyBox[currentPlayer]){
-		if (penaltyBox.isPlayerInTheBox((String)gameField.getCurrentPlayer(currentPlayer))) {
+		if (penaltyBox.isPlayerInTheBox(gameField.getCurrentPlayer(currentPlayer))) {
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
 				purses[currentPlayer]++;
@@ -99,12 +98,12 @@ public class Game {
 
 				boolean winner = didPlayerWin();
 				currentPlayer++;
-				if (currentPlayer == players.size()) currentPlayer = 0;
+				if (currentPlayer == gameField.getNumPlayers()) currentPlayer = 0;
 
 				return winner;
 			} else {
 				currentPlayer++;
-				if (currentPlayer == players.size()) currentPlayer = 0;
+				if (currentPlayer == gameField.getNumPlayers()) currentPlayer = 0;
 				return true;
 			}
 
@@ -121,7 +120,7 @@ public class Game {
 
 			boolean winner = didPlayerWin();
 			currentPlayer++;
-			if (currentPlayer == players.size()) currentPlayer = 0;
+			if (currentPlayer == gameField.getNumPlayers()) currentPlayer = 0;
 
 			return winner;
 		}
@@ -130,10 +129,10 @@ public class Game {
 	public boolean wrongAnswer(){
 		System.out.println("Question was incorrectly answered");
 		System.out.println(gameField.getCurrentPlayer(currentPlayer)+ " was sent to the penalty box");
-		penaltyBox.sendPlayerToTheBox((String)gameField.getCurrentPlayer(currentPlayer));
+		penaltyBox.sendPlayerToTheBox(gameField.getCurrentPlayer(currentPlayer));
 
 		currentPlayer++;
-		if (currentPlayer == players.size()) currentPlayer = 0;
+		if (currentPlayer == gameField.getNumPlayers()) currentPlayer = 0;
 		return true;
 	}
 
