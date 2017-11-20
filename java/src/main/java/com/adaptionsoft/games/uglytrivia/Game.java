@@ -28,10 +28,6 @@ public class Game {
 		}
 	}
 
-	public boolean isPlayable() {
-		return (gameField.getNumPlayers() >= 2);
-	}
-
 	public boolean add(String playerName) {
 
 		players.add(playerName);
