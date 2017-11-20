@@ -1,11 +1,12 @@
 package com.adaptionsoft.games.uglytrivia;
 
 import com.adaptionsoft.games.PenaltyBox.PenaltyBox;
+import com.adaptionsoft.games.Printer.ConsolePrinter;
+import com.adaptionsoft.games.Printer.Printer;
 import com.adaptionsoft.games.Question.Question;
 import com.adaptionsoft.games.Question.QuestionStorage;
 
 public class Game {
-	int[] purses  = new int[6];
 	PenaltyBox penaltyBox = new PenaltyBox();
 
 	QuestionStorage questions = new QuestionStorage();
@@ -13,6 +14,7 @@ public class Game {
 
 	boolean isGettingOutOfPenaltyBox;
 
+	Printer printer = new ConsolePrinter(gameField);
 
 	public  Game(){
 		for (int i = 0; i < 50; i++) {
@@ -27,32 +29,32 @@ public class Game {
 
 		gameField.addPlayer(playerName);
 
-		purses[gameField.getNumPlayers()] = 0;
+		printer.playerAdded(playerName);
+		printer.howManyPlayers();
 
-		System.out.println(playerName + " was added");
-		System.out.println("They are player number " + gameField.getNumPlayers());
 		return true;
 	}
 
 	public void roll(int roll) {
-		System.out.println(gameField.getCurrentPlayer() + " is the current player");
-		System.out.println("They have rolled a " + roll);
+
+		printer.currentPlayer();
+		printer.roll(roll);
 
 		if (penaltyBox.isPlayerInTheBox(gameField.getCurrentPlayer())) {
 			if (roll % 2 != 0) {
 				isGettingOutOfPenaltyBox = true;
 
-				System.out.println(gameField.getCurrentPlayer() + " is getting out of the penalty box");
+				printer.outOfPenaltyBox();
 
 				gameField.movePlayer(roll);
 
-				System.out.println(gameField.getCurrentPlayer()
-						+ "'s new location is "
-						+ gameField.getPlaceForCurrentPlayer());
-				System.out.println("The category is " + currentCategory());
+				printer.currentPosition();
+
+				// TODO: Get rid of the parameter
+				printer.currentCategory(questions);
 				askQuestion();
 			} else {
-				System.out.println(gameField.getCurrentPlayer() + " is not getting out of the penalty box");
+				printer.notOutOfPenaltyBox();
 				isGettingOutOfPenaltyBox = false;
 			}
 
@@ -60,11 +62,8 @@ public class Game {
 
 			gameField.movePlayer(roll);
 
-			// TODO: 12 seems to be a default action
-			System.out.println(gameField.getCurrentPlayer()
-					+ "'s new location is "
-					+ gameField.getPlaceForCurrentPlayer());
-			System.out.println("The category is " + currentCategory());
+			printer.currentPosition();
+			printer.currentCategory(questions);
 			askQuestion();
 		}
 
@@ -82,14 +81,11 @@ public class Game {
 	public boolean wasCorrectlyAnswered() {
 		if (penaltyBox.isPlayerInTheBox(gameField.getCurrentPlayer())) {
 			if (isGettingOutOfPenaltyBox) {
-				System.out.println("Answer was correct!!!!");
 				gameField.putNewCoinsForPlayer();
-                System.out.println(gameField.getCurrentPlayer()
-						+ " now has "
-						+ gameField.getCurrentCoins()
-						+ " Gold Coins.");
+				printer.correctAnswer();
 
-				boolean winner = didPlayerWin();
+
+				boolean winner = gameField.didPlayerWin();
 				gameField.nextPlayersTurn();
 
 				return winner;
@@ -98,18 +94,11 @@ public class Game {
 				return true;
 			}
 
-
-
 		} else {
+			gameField.putNewCoinsForPlayer();
+            printer.correctAnswer();
 
-			System.out.println("Answer was correct!!!!");
-            gameField.putNewCoinsForPlayer();
-			System.out.println(gameField.getCurrentPlayer()
-					+ " now has "
-					+ gameField.getCurrentCoins()
-					+ " Gold Coins.");
-
-			boolean winner = didPlayerWin();
+			boolean winner = gameField.didPlayerWin();
 			gameField.nextPlayersTurn();
 
 			return winner;
@@ -117,16 +106,10 @@ public class Game {
 	}
 
 	public boolean wrongAnswer(){
-		System.out.println("Question was incorrectly answered");
-		System.out.println(gameField.getCurrentPlayer()+ " was sent to the penalty box");
+		printer.sentToPenaltyBox();
 		penaltyBox.sendPlayerToTheBox(gameField.getCurrentPlayer());
 
 		gameField.nextPlayersTurn();
 		return true;
-	}
-
-
-	private boolean didPlayerWin() {
-		return !(gameField.getCurrentCoins() == 6);
 	}
 }

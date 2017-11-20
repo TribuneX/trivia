@@ -1,5 +1,7 @@
 package com.adaptionsoft.games.uglytrivia;
 
+import com.adaptionsoft.games.Player.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,5 +56,9 @@ public class GameField {
         Integer newCoins = coins.get(currentPlayer);
         newCoins = newCoins + 1;
         coins.set(currentPlayer, newCoins);
+    }
+
+    public boolean didPlayerWin(){
+       return !(getCurrentCoins() == 6);
     }
 }
