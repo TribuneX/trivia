@@ -24,17 +24,9 @@ public class Game {
 		for (int i = 0; i < 50; i++) {
 
 			questions.addQuestion(new Question("Pop", i));
-			categoriesSet.add("Pop");
 			questions.addQuestion(new Question("Science", i));
-            categoriesSet.add("Science");
 			questions.addQuestion(new Question("Sports", i));
-            categoriesSet.add("Sports");
 			questions.addQuestion(new Question("Rock", i));
-            categoriesSet.add("Rock");
-
-			//scienceQuestions.addLast(("Science Question " + i));
-			//sportsQuestions.addLast(("Sports Question " + i));
-			//rockQuestions.addLast(createRockQuestion(i));
 		}
         categories = categoriesSet.toArray(new String[categoriesSet.size()]);
 	}
@@ -99,14 +91,12 @@ public class Game {
 	}
 
 	private void askQuestion() {
-
 	    System.out.println(questions.getQuestionForCategoy(currentCategory()).getQuestion());
-
 	}
 
 
 	private String currentCategory() {
-        return categories[places[currentPlayer]%categories.length];
+        return questions.getCategoryCurrentPosition(places[currentPlayer]);
 	}
 
 	public boolean wasCorrectlyAnswered() {
@@ -135,7 +125,7 @@ public class Game {
 
 		} else {
 
-			System.out.println("Answer was corrent!!!!");
+			System.out.println("Answer was correct!!!!");
 			purses[currentPlayer]++;
 			System.out.println(players.get(currentPlayer)
 					+ " now has "
@@ -154,7 +144,7 @@ public class Game {
 		System.out.println("Question was incorrectly answered");
 		System.out.println(players.get(currentPlayer)+ " was sent to the penalty box");
 		penaltyBox.sendPlayerToTheBox((String)players.get(currentPlayer));
-		//inPenaltyBox[currentPlayer] = true;
+		inPenaltyBox[currentPlayer] = true;
 
 		currentPlayer++;
 		if (currentPlayer == players.size()) currentPlayer = 0;

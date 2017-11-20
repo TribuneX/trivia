@@ -1,13 +1,16 @@
 package com.adaptionsoft.games.Question;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 public class QuestionStorage implements QuestionStorageInterface {
 
-    Map<String, LinkedList<Question>> questionStorage = new HashMap<String, LinkedList<Question>>();
+    Map<String, LinkedList<Question>> questionStorage;
+    Set<String> categoriesSet;
 
+    public QuestionStorage() {
+        this.questionStorage = new HashMap<>();
+        this.categoriesSet = new LinkedHashSet<>();
+    }
 
     @Override
     public void addQuestion(Question q) {
@@ -18,6 +21,7 @@ public class QuestionStorage implements QuestionStorageInterface {
         }
 
         questionStorage.get(q.getCategory()).add(q);
+        categoriesSet.add(q.getCategory());
 
     }
 
@@ -28,5 +32,9 @@ public class QuestionStorage implements QuestionStorageInterface {
         } else {
             return questionStorage.get(category).removeFirst();
         }
+    }
+
+    public String getCategoryCurrentPosition(int currentPlayer) {
+        return categoriesSet.toArray(new String[categoriesSet.size()])[currentPlayer%categoriesSet.size()];
     }
 }
