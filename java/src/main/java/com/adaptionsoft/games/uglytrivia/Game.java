@@ -60,19 +60,15 @@ public class Game {
 		} else {
 			MoveAndAskQuestion(roll);
 		}
-
-
 	}
 
 	private void MoveAndAskQuestion(int roll) {
 		gameField.movePlayer(roll);
-		// TODO: Get rid of the parameter
 		printer.printCurrentStats(currentCategory());
 		askQuestion();
 	}
 
 	private void askQuestion() {
-		// TODO: Find a more elegant solution for the current category
 		printer.printQuestion(questions.getQuestionForCategory(currentCategory()));
 	}
 
